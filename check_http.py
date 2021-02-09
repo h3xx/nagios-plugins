@@ -79,6 +79,13 @@ if __name__ == "__main__":
 	parser.add_argument('url', nargs='?')
 	args = parser.parse_args()
 
+	# Strip quotes from URL
+	# (Workaround for passing URL via check_ncpa.py)
+	if args.url:
+		m = re.match(r'^(["\'])(.*)\1$', args.url)
+		if (m):
+			args.url = m.group(2)
+
 	# valid URL given?
 	if not args.url or not re.match(r'^https?://', args.url):
 		parser.print_help()
