@@ -36,10 +36,10 @@ def outputResult(nagiosStatus, summary, response=None, **kwargs):
 
 	### no response
 	if response is None:
-		print "{nagiosStatus}: {summary}".format(
+		print("{nagiosStatus}: {summary}".format(
 			nagiosStatus=nagiosStatus2Text[nagiosStatus],
 			summary=summary
-		)
+		))
 		sys.exit(nagiosStatus)
 
 	### valid response
@@ -51,14 +51,14 @@ def outputResult(nagiosStatus, summary, response=None, **kwargs):
 		else:
 			summary = "Status %d" % (response.status_code)
 
-		print "{nagiosStatus}: {summary} - {size} bytes in {time:.3f} second response time|time={time:.4f};{warn:.4f};{crit:.4f}; size={size:.2f}B;;;0".format(
+		print("{nagiosStatus}: {summary} - {size} bytes in {time:.3f} second response time|time={time:.4f};{warn:.4f};{crit:.4f}; size={size:.2f}B;;;0".format(
 			nagiosStatus=nagiosStatus2Text[nagiosStatus],
 			summary=summary,
 			size=len(response.text),
 			time=float(response.elapsed.microseconds/1000)/1000,
 			warn=args.warn,
 			crit=args.crit,
-		)
+		))
 
 		sys.exit(nagiosStatus)
 

@@ -18,7 +18,7 @@ version = '1.1'
 def printCert(cert):
 	# type check
 	if not isinstance(cert, crypto.X509):
-		print "CRIT: Certificate is invalid"
+		print("CRIT: Certificate is invalid")
 		sys.exit(2)
 
 	nagiosStatus2Text = {
@@ -28,8 +28,8 @@ def printCert(cert):
 	}
 
 	# format expire times
-	nbefore = datetime.datetime.strptime(cert.get_notBefore(), '%Y%m%d%H%M%SZ')
-	nafter = datetime.datetime.strptime(cert.get_notAfter(), '%Y%m%d%H%M%SZ')
+	nbefore = datetime.datetime.strptime(cert.get_notBefore().decode('utf-8'), '%Y%m%d%H%M%SZ')
+	nafter = datetime.datetime.strptime(cert.get_notAfter().decode('utf-8'), '%Y%m%d%H%M%SZ')
 
 	# calculate time diff between now and "not after"
 	now = datetime.datetime.utcnow()
@@ -76,13 +76,13 @@ def printCert(cert):
 		exitCode = 0
 
 	# output and exit
-	print "{nagiosStatus}: {summary}|days={days:d};{warn:d};{crit:d};0".format(
+	print("{nagiosStatus}: {summary}|days={days:d};{warn:d};{crit:d};0".format(
 		nagiosStatus=nagiosStatus2Text[exitCode],
 		summary=summary,
 		warn=args.warn,
 		crit=args.crit,
 		**certInfo
-	)
+	))
 
 	sys.exit(exitCode)
 
@@ -130,7 +130,7 @@ try:
 	ss.do_handshake()
 
 except Exception as e:
-	print "CRIT: connect error"
+	print("CRIT: connect error")
 	sys.exit(2)
 
 
